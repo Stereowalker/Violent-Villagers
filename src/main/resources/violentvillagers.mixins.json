@@ -5,7 +5,8 @@
   "refmap": "Violent Villagers-refmap.json",
   "mixins": [
 	"ChestBlockMixin",
-	"VillagerMixin"
+	"VillagerMixin",
+	"BlockMixin"
   ],
   "client": [
   ],

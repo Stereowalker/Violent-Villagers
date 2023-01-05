@@ -12,18 +12,28 @@ import com.stereowalker.unionlib.client.gui.screens.config.ConfigScreen;
 import com.stereowalker.unionlib.config.ConfigBuilder;
 import com.stereowalker.unionlib.mod.MinecraftMod;
 import com.stereowalker.violentvillagers.config.Config;
+import com.stereowalker.violentvillagers.tags.BlockVTags;
 import com.stereowalker.violentvillagers.world.entity.ai.sensing.VillagerAttackablesSensor;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.gossip.GossipType;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
 
 public class ViolentVillagers extends MinecraftMod
 {
@@ -38,6 +48,7 @@ public class ViolentVillagers extends MinecraftMod
 	public ViolentVillagers() 
 	{
 		super(MOD_ID, new ResourceLocation(MOD_ID, "textures/gui/controller_icon2.png"), LoadType.BOTH);
+		new BlockVTags();
 		ConfigBuilder.registerConfig(MOD_ID, CONFIG);
 		instance = this;
 	}
@@ -63,6 +74,7 @@ public class ViolentVillagers extends MinecraftMod
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public Screen getConfigScreen(Minecraft mc, Screen previousScreen) {
 		return new ConfigScreen(previousScreen, CONFIG);
 	}
@@ -83,6 +95,20 @@ public class ViolentVillagers extends MinecraftMod
 	{
 		return new ResourceLocation(MOD_ID, name);
 	}
+	
+    public static void upsetNearbyVillagers(Player player, BlockPos pos, boolean angerOnlyIfCanSee) {
+        List<Villager> list = player.level.getEntitiesOfClass(Villager.class, player.getBoundingBox().inflate(16.0));
+        list.stream().filter(villager -> !angerOnlyIfCanSee || BehaviorUtils.canSee(villager, player)).forEach(villager -> {
+        	Brain<Villager> brain = villager.getBrain();
+        	if (brain.getMemory(MemoryModuleType.HOME).isPresent() || brain.getMemory(MemoryModuleType.JOB_SITE).isPresent()) {
+        		if (brain.getMemory(MemoryModuleType.HOME).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
+            		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
+        		} else if (brain.getMemory(MemoryModuleType.JOB_SITE).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
+            		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
+        		} 
+        	}
+        });
+    }
 
 	public static class Locations {
 	}
