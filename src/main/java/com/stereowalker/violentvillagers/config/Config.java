@@ -14,7 +14,7 @@ public class Config implements ConfigObject {
 	public int chest_open_loss = 5;
 	
 	@UnionConfig.Entry(group = "Reputation", name = "Distance From Home Or Work")
-	@UnionConfig.Range(max = 1, min = 20.0d, useSlider = true)
+	@UnionConfig.Range(min = 1.0d, max = 20.0d, useSlider = true)
 	@UnionConfig.Comment(comment = "How far the chest has to be from a villagers home or work for it to count towards reputation loss")
 	public double distance_from_site = 10.0d;
 }
