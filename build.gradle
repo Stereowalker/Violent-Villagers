@@ -26,6 +26,17 @@ repositories {
         name = 'ParchmentMC'
         url = 'https://maven.parchmentmc.org'
     }
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+    }
+    maven {
+        name = "ARRP"
+        url = uri("https://storage.googleapis.com/devan-maven/")
+        content {
+            includeGroup "net.devtech"
+        }
+    }
 }
 
 dependencies {
@@ -35,12 +46,16 @@ dependencies {
   		officialMojangMappings()
   		parchment("org.parchmentmc.data:"+mappingsChannel+"-"+mappingsVersion+"@zip")
 	}
+	modImplementation "com.stereowalker.unionlib:UnionLib:"+modMinecraftVersion+"-"+unionLibVersion+"-"+modLoader+""
 	modImplementation "net.fabricmc:fabric-loader:${project.modFabricLoaderVersion}"
+	modImplementation "net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
+    modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:forge_config_api-547434:3551753"
 	modImplementation "curse.maven:archi-419699:3929414"
 	modImplementation "curse.maven:cloth-348521:3972425"
 	modImplementation "curse.maven:carrier-409184:3671184"
-	modImplementation "com.stereowalker.unionlib:UnionLib:"+modMinecraftVersion+"-"+unionLibVersion+"-"+modLoader+""
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
