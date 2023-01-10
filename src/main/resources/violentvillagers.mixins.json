@@ -3,10 +3,12 @@
   "package": "com.stereowalker.violentvillagers.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "Violent Villagers-refmap.json",
+  "plugin": "com.stereowalker.violentvillagers.mixin.ViolentVillagersMixinPlugin",
   "mixins": [
 	"ChestBlockMixin",
 	"VillagerMixin",
-	"BlockMixin"
+	"BlockMixin",
+	"carrier.CarriableGenericMixin"
   ],
   "client": [
   ],
