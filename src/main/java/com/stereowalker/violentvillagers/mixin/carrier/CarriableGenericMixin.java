@@ -24,7 +24,7 @@ public abstract class CarriableGenericMixin {
 	@Inject(method = "tryPickup", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
 	public void tryPickup_inject(@NotNull CarrierComponent carrier, @NotNull Level world, @NotNull BlockPos blockPos, @Nullable Entity entity, CallbackInfoReturnable<InteractionResult> cir) {
 		BlockState blockState = world.getBlockState(blockPos);
-		if (blockState.is(BlockVTags.GUARDED_BY_VILLAGERS)) {
+		if (blockState.is(BlockVTags.GUARDED_BY_VILLAGERS) && carrier != null) {
 			ViolentVillagers.upsetNearbyVillagers(carrier.getOwner(), blockPos, false);
         }
 	}

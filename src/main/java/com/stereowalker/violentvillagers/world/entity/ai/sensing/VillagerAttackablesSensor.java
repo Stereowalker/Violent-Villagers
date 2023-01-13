@@ -23,7 +23,6 @@ public class VillagerAttackablesSensor extends NearestVisibleLivingEntitySensor 
     
     private boolean isReputationTooLow(Player player, Villager villager) {
     	int reputation = villager.getPlayerReputation(player);
-    	System.out.println(reputation);
     	return reputation < 0;
     }
     

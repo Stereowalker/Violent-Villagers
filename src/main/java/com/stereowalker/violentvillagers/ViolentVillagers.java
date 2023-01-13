@@ -100,13 +100,11 @@ public class ViolentVillagers extends MinecraftMod
         List<Villager> list = player.level.getEntitiesOfClass(Villager.class, player.getBoundingBox().inflate(16.0));
         list.stream().filter(villager -> !angerOnlyIfCanSee || BehaviorUtils.canSee(villager, player)).forEach(villager -> {
         	Brain<Villager> brain = villager.getBrain();
-        	if (brain.getMemory(MemoryModuleType.HOME).isPresent() || brain.getMemory(MemoryModuleType.JOB_SITE).isPresent()) {
-        		if (brain.getMemory(MemoryModuleType.HOME).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
-            		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
-        		} else if (brain.getMemory(MemoryModuleType.JOB_SITE).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
-            		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
-        		} 
-        	}
+    		if (brain.getMemory(MemoryModuleType.HOME).isPresent() && brain.getMemory(MemoryModuleType.HOME).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
+        		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
+    		} else if (brain.getMemory(MemoryModuleType.JOB_SITE).isPresent() && brain.getMemory(MemoryModuleType.JOB_SITE).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {
+        		villager.getGossips().add(player.getUUID(), GossipType.MINOR_NEGATIVE, ViolentVillagers.CONFIG.chest_open_loss);
+    		} 
         });
     }
 
