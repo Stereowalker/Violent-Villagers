@@ -99,6 +99,7 @@ curseforge {
         addGameVersion("${project.modLoader}")
         relations {
         	requiredDependency 'unionlib'
+        	optionalDependency 'carrier'
         }
 		mainArtifact(file("${project.buildDir}/libs/"+modFilename+"-${project.version}.jar")) {
 			displayName = modFilename+"-${project.version}"
