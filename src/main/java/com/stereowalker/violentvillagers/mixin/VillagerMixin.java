@@ -22,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ReputationEventHandler;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.behavior.EraseMemoryIf;
 import net.minecraft.world.entity.ai.behavior.MeleeAttack;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
@@ -61,16 +62,11 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
 		return false;
 	}
 
-	private static void onStopAttacking(Villager vill) {
+	private static void onStopAttacking(Villager vill, LivingEntity target) {
         Entity entity;
         DamageSource damageSource;
-        Optional<LivingEntity> optional = vill.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET);
-        if (!optional.isPresent()) {
-            return;
-        }
         Level level = vill.level;
-        LivingEntity livingEntity = optional.get();
-        if (livingEntity.isDeadOrDying() && (damageSource = livingEntity.getLastDamageSource()) != null && (entity = damageSource.getEntity()) != null && entity.getType() == EntityType.PLAYER) {
+        if (target.isDeadOrDying() && (damageSource = target.getLastDamageSource()) != null && (entity = damageSource.getEntity()) != null && entity.getType() == EntityType.PLAYER) {
             Player player = (Player)entity;
             List<Player> list = level.getEntitiesOfClass(Player.class, vill.getBoundingBox().inflate(20.0));
             if (list.contains(player)) {
@@ -97,10 +93,10 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
             villagerBrain.addActivityWithConditions(Activity.WORK, VillagerGoalPackages.getWorkPackage(villagerProfession, 0.5f), ImmutableSet.of(Pair.of(MemoryModuleType.JOB_SITE, MemoryStatus.VALUE_PRESENT)));
         }
         villagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerProfession, 0.5f));
-        villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(new StopAttackingIfTargetInvalid<Villager>(VillagerMixin::onStopAttacking), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(/*AxolotlAi::getSpeedModifierChasing*/1.0f), new MeleeAttack(20), new EraseMemoryIf<Villager>(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
+        villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(StopAttackingIfTargetInvalid.create(VillagerMixin::onStopAttacking), SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(/*AxolotlAi::getSpeedModifierChasing*/1.0f), MeleeAttack.create(20), EraseMemoryIf.create(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
         villagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerProfession, 0.5f), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
         villagerBrain.addActivity(Activity.REST, VillagerGoalPackages.getRestPackage(villagerProfession, 0.5f));
-        ImmutableList<? extends Pair<Integer, ? extends Behavior<? super Villager>>> ent = new ImmutableList.Builder<Pair<Integer,? extends Behavior<? super Villager>>>().add(Pair.of(3, new StartAttacking<Villager>(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, 0.5f)).build();
+        ImmutableList<? extends Pair<Integer, ? extends BehaviorControl<? super Villager>>> ent = new ImmutableList.Builder<Pair<Integer, ? extends BehaviorControl<? super Villager>>>().add(Pair.of(3, StartAttacking.create(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, 0.5f)).build();
         villagerBrain.addActivity(Activity.IDLE, ent);
         villagerBrain.addActivity(Activity.PANIC, VillagerGoalPackages.getPanicPackage(villagerProfession, 0.5f));
         villagerBrain.addActivity(Activity.PRE_RAID, VillagerGoalPackages.getPreRaidPackage(villagerProfession, 0.5f));
