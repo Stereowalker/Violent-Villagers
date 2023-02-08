@@ -37,6 +37,10 @@ repositories {
             includeGroup "net.devtech"
         }
     }
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
 }
 
 dependencies {
@@ -47,13 +51,13 @@ dependencies {
   		parchment("org.parchmentmc.data:"+mappingsChannel+"-"+mappingsVersion+"@zip")
 	}
 	modImplementation "com.stereowalker.unionlib:UnionLib:"+modMinecraftVersion+"-"+unionLibVersion+"-"+modLoader+""
+	modImplementation "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
 	modImplementation "net.fabricmc:fabric-loader:${project.modFabricLoaderVersion}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
     modImplementation "net.devtech:arrp:0.5.5"
-	modImplementation "curse.maven:forge_config_api-547434:4325269"
-	modImplementation "curse.maven:carrier-409184:3671184"
+	modImplementation "curse.maven:carrier-409184:3873675"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
