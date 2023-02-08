@@ -37,6 +37,8 @@ repositories {
             includeGroup "net.devtech"
         }
     }
+    maven {url 'https://maven.blamejared.com/'}
+    maven {url 'https://jitpack.io'}
 }
 
 dependencies {
@@ -54,6 +56,8 @@ dependencies {
     modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:forge_config_api-547434:4325269"
 	modImplementation "curse.maven:carrier-409184:3671184"
+	modImplementation "com.github.LlamaLad7:MixinExtras:0.1.1"
+	modImplementation "tschipp.carryon:carryon-fabric-1.19.3:2.0.5.17"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
