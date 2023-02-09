@@ -106,6 +106,7 @@ curseforge {
         relations {
         	requiredDependency 'unionlib'
         	optionalDependency 'carrier'
+        	optionalDependency 'carry-on'
         }
 		mainArtifact(file("${project.buildDir}/libs/"+modFilename+"-${project.version}.jar")) {
 			displayName = modFilename+"-${project.version}"
@@ -118,6 +119,23 @@ curseforge {
     	debug = false // defaults to false
     	forgeGradleIntegration = false
   	}	
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = modId
+    versionNumber = "${project.version}"
+    versionType = "release"
+    uploadFile = jar
+    gameVersions = [modMinecraftVersion]
+    loaders = ["${project.modLoader}".toLowerCase()]
+	changelog = file('changelog.md').text
+    dependencies {
+        // scope.type
+        // The scope can be `required`, `optional`, `incompatible`, or `embedded`
+        // The type can either be `project` or `version`
+        //required.project "fabric-api" // Creates a new required dependency on Fabric API
+    }
 }
 
 publishing {
