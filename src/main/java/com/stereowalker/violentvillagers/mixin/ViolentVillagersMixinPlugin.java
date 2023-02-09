@@ -24,15 +24,13 @@ public class ViolentVillagersMixinPlugin implements IMixinConfigPlugin {
 		{
 			try{Class.forName("me.steven.carrier.ClientUtils");}
 			catch (ClassNotFoundException e)
-			{apply = false;
-			System.out.println("Not appliyng mixin for "+targetClassName);}
+			{apply = false;System.out.println("Not appliyng mixin for "+targetClassName);}
 		}
 		if (mixinClassName.contains("mixin.carryon"))
 		{
 			try{Class.forName("tschipp.carryon.Constants");}
 			catch (ClassNotFoundException e)
-			{apply = false;
-			System.out.println("Not appliyng mixin for "+targetClassName);}
+			{apply = false;System.out.println("Not appliyng mixin for "+targetClassName);}
 		}
 		System.out.println(targetClassName+" "+mixinClassName+" "+apply);
 		return apply;
