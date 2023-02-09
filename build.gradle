@@ -60,7 +60,7 @@ dependencies {
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
     modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:carrier-409184:3873675"
-	modImplementation "com.github.LlamaLad7:MixinExtras:0.1.1"
+	implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
 	modImplementation "tschipp.carryon:carryon-fabric-1.19.3:2.0.5.17"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
