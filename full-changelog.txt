@@ -1,0 +1,5 @@
+[2.0.1]
+- Added support for the Carry On mod
+
+[2.0.0]
+- Ported to 1.19.3
