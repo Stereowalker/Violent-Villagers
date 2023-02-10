@@ -2,6 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
   	id "com.matthewprenger.cursegradle" version "1.4.0"
+  	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -61,7 +62,7 @@ dependencies {
     modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:carrier-409184:3873675"
 	implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
-	modImplementation "tschipp.carryon:carryon-fabric-1.19.3:2.0.5.17"
+	modImplementation "tschipp.carryon:carryon-fabric-1.19.2:2.0.4.6"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
