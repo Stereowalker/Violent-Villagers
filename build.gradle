@@ -63,6 +63,7 @@ dependencies {
 	modImplementation "curse.maven:carrier-409184:3873675"
 	implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
 	modImplementation "tschipp.carryon:carryon-fabric-1.19.2:2.0.4.6"
+	modImplementation "curse.maven:ferritecore-459857:4117902"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
@@ -127,7 +128,7 @@ modrinth {
     projectId = modId
     versionNumber = "${project.version}"
     versionType = "release"
-    uploadFile = jar
+    uploadFile = remapJar
     gameVersions = [modMinecraftVersion]
     loaders = ["${project.modLoader}".toLowerCase()]
 	changelog = file('changelog.md').text
