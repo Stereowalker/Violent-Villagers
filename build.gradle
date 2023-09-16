@@ -17,6 +17,20 @@ println('Mod Name: ' + modFilename + ', Mod Version: ' + modVersion + ', Minecra
 
 loom {
     accessWidenerPath = file("src/main/resources/"+modId+".accesswidener")
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
 }
 
 repositories {
@@ -26,10 +40,6 @@ repositories {
     maven {
         name = 'ParchmentMC'
         url = 'https://maven.parchmentmc.org'
-    }
-    maven {
-        name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
     maven {
         name = "ARRP"
@@ -52,16 +62,17 @@ dependencies {
 	modImplementation "com.stereowalker.unionlib:UnionLib:"+modMinecraftVersion+"-"+unionLibVersion+"-"+modLoader+""
 	modImplementation "net.fabricmc:fabric-loader:${project.modFabricLoaderVersion}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
-    modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:forge_config_api-547434:4325269"
+    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
+    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
+    //modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:carrier-409184:3873675"
-	implementation "com.github.LlamaLad7:MixinExtras:0.1.1"
+	
+	implementation "com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.6"
 	modImplementation "tschipp.carryon:carryon-fabric-1.19.3:2.0.5.17"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}+${project.modMinecraftVersion}"
 	implementation 'com.electronwill.night-config:core:3.6.3'
 	implementation 'com.electronwill.night-config:toml:3.6.3'
 }
