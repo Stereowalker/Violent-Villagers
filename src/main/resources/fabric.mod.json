@@ -27,9 +27,9 @@
 
   "depends": {
     "fabricloader": ">=0.14.12",
-    "minecraft": "1.19",
+    "minecraft": ">=1.19",
     "java": ">=17",
-	"unionlib": [">=10.2.0", "<10.2.0"]
+	"unionlib": [">=10.2.0", "<10.3.0"]
   },
   "accessWidener": "violentvillagers.accesswidener",
   "suggests": {

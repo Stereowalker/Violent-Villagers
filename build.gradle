@@ -22,13 +22,13 @@ loom {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
-            runDir("run")
+            runDir("run/Fabric Client")
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
-            runDir("run")
+            runDir("run/Fabric Server")
         }
     }
 }
@@ -37,9 +37,14 @@ repositories {
 	maven {url = "https://repo.spongepowered.org/maven"} // mixin
 	maven {url "https://www.cursemaven.com"} //cursemaven
 	maven {url "https://modmaven.dev/" } //UnionLib
+	maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
     maven {
         name = 'ParchmentMC'
         url = 'https://maven.parchmentmc.org'
+    }
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://maven.ladysnake.org/releases'
     }
     maven {
         name = "ARRP"
@@ -62,9 +67,9 @@ dependencies {
 	modImplementation "com.stereowalker.unionlib:UnionLib:"+modMinecraftVersion+"-"+unionLibVersion+"-"+modLoader+""
 	modImplementation "net.fabricmc:fabric-loader:${project.modFabricLoaderVersion}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0"
-	modImplementation "curse.maven:forge_config_api-547434:4325269"
-    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
-    //modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
+	modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeConfigApiVersion}"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
     //modImplementation "net.devtech:arrp:0.5.5"
 	modImplementation "curse.maven:carrier-409184:3873675"
 	
@@ -110,13 +115,16 @@ curseforge {
 		changelog = file('changelog.md')
 		releaseType = 'release'
 		addGameVersion(modMinecraftVersion)
+		addGameVersion("1.20")
+		addGameVersion("1.19.4")
+		addGameVersion("1.19.3")
         addGameVersion("${project.modLoader}")
         relations {
         	requiredDependency 'unionlib'
         	optionalDependency 'carrier'
         	optionalDependency 'carry-on'
         }
-		mainArtifact(file("${project.buildDir}/libs/"+modFilename+"-${project.version}.jar")) {
+		mainArtifact(remapJar) {
 			displayName = modFilename+"-${project.version}"
 		}
 		afterEvaluate {
@@ -134,8 +142,8 @@ modrinth {
     projectId = modId
     versionNumber = "${project.version}"
     versionType = "release"
-    uploadFile = jar
-    gameVersions = [modMinecraftVersion]
+    uploadFile = remapJar
+    gameVersions = [modMinecraftVersion, "1.20", "1.19.4", "1.19.3"]
     loaders = ["${project.modLoader}".toLowerCase()]
 	changelog = file('changelog.md').text
     dependencies {
