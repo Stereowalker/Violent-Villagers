@@ -48,10 +48,15 @@ repositories {
     }
     maven {
         name = "ARRP"
-        url = uri("https://storage.googleapis.com/devan-maven/")
+        url = uri("https://ueaj.dev/maven")
         content {
             includeGroup "net.devtech"
         }
+    }
+    
+    maven {
+        url "https://maven.siphalor.de/"
+        name "Siphalor's Maven (Carry On)"
     }
     maven {url 'https://maven.blamejared.com/'}
     maven {url 'https://jitpack.io'}
@@ -68,13 +73,14 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.modFabricLoaderVersion}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:1.9.0+kotlin.1.8.0"
 	modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeConfigApiVersion}"
+	
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.0.1"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:5.0.1"
-    //modImplementation "net.devtech:arrp:0.5.5"
-	modImplementation "curse.maven:carrier-409184:3873675"
+    modImplementation "net.devtech:arrp:0.6.7"
+	modImplementation "curse.maven:carrier-409184:4605884"
 	
 	implementation "com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.6"
-	modImplementation "tschipp.carryon:carryon-fabric-1.19.3:2.0.5.17"
+	modImplementation "tschipp.carryon:carryon-fabric-1.20.1:2.1.2.5"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.modLoaderVersion}+${project.modMinecraftVersion}"
