@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import com.stereowalker.unionlib.util.VersionHelper;
 import com.stereowalker.violentvillagers.world.entity.ai.sensing.VSensorType;
 
 import net.minecraft.world.damagesource.DamageSource;
@@ -63,7 +64,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
 	private static void onStopAttacking(Villager vill, LivingEntity target) {
         Entity entity;
         DamageSource damageSource;
-        Level level = vill.level();
+        Level level = VersionHelper.entityLevel(vill);
         if (target.isDeadOrDying() && (damageSource = target.getLastDamageSource()) != null && (entity = damageSource.getEntity()) != null && entity.getType() == EntityType.PLAYER) {
             Player player = (Player)entity;
             List<Player> list = level.getEntitiesOfClass(Player.class, vill.getBoundingBox().inflate(20.0));
@@ -117,9 +118,9 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
 
     @Inject(method = "customServerAiStep", at = @At("TAIL"))
     protected void customServerAiStep2(CallbackInfo ci) {
-        this.level().getProfiler().push("villagerActivityUpdate");
+        VersionHelper.entityLevel(this).getProfiler().push("villagerActivityUpdate");
         updateActivity((Villager)(Object)this);
-        this.level().getProfiler().pop();
+        VersionHelper.entityLevel(this).getProfiler().pop();
     }
     
     @Shadow public int getPlayerReputation(Player player) {return 0;}

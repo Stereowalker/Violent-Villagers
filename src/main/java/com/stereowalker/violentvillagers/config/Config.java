@@ -13,6 +13,10 @@ public class Config implements ConfigObject {
 	@UnionConfig.Comment(comment = "The amount of reputation the player losses when opening a chest in front of a villager")
 	public int chest_open_loss = 5;
 	
+	@UnionConfig.Entry(group = "Reputation", name = "Reputation Required To Rename")
+	@UnionConfig.Comment(comment = "The amount of reputation the player needs to have before renaming a vilager with a nametag")
+	public int rename_req = 18;
+	
 	@UnionConfig.Entry(group = "Reputation", name = "Distance From Home Or Work")
 	@UnionConfig.Range(min = 1.0d, max = 20.0d, useSlider = true)
 	@UnionConfig.Comment(comment = "How far the chest has to be from a villagers home or work for it to count towards reputation loss")
