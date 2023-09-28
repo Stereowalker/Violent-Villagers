@@ -9,7 +9,6 @@ import com.google.common.collect.Lists;
 import com.stereowalker.unionlib.api.collectors.ConfigCollector;
 import com.stereowalker.unionlib.api.collectors.DefaultAttributeModifier;
 import com.stereowalker.unionlib.api.registries.RegistryCollector;
-import com.stereowalker.unionlib.config.ConfigBuilder;
 import com.stereowalker.unionlib.mod.MinecraftMod;
 import com.stereowalker.unionlib.mod.ServerSegment;
 import com.stereowalker.unionlib.util.VersionHelper;
@@ -54,7 +53,7 @@ public class ViolentVillagers extends MinecraftMod
 	
 	@Override
 	public void setupConfigs(ConfigCollector collector) {
-		ConfigBuilder.registerConfig(CONFIG);
+		collector.registerConfig(CONFIG);
 	}
 	
 	@Override

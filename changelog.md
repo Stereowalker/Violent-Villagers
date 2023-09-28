@@ -1,1 +1,1 @@
-- Ported to 1.20.1
+- Renaming a villager now requires a bit of reputation to perform (configurable)

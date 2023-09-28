@@ -122,6 +122,7 @@ curseforge {
 		releaseType = 'release'
 		addGameVersion(modMinecraftVersion)
 		addGameVersion("1.20")
+		addGameVersion("1.19.4")
         addGameVersion("${project.modLoader}")
         relations {
         	requiredDependency 'unionlib'
@@ -147,7 +148,7 @@ modrinth {
     versionNumber = "${project.version}"
     versionType = "release"
     uploadFile = remapJar
-    gameVersions = [modMinecraftVersion, "1.20"]
+    gameVersions = [modMinecraftVersion, "1.20", "1.19.4"]
     loaders = ["${project.modLoader}".toLowerCase()]
 	changelog = file('changelog.md').text
     dependencies {

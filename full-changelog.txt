@@ -1,2 +1,5 @@
+[3.0.1]
+- Renaming a villager now requires a bit of reputation to perform (configurable)
+
 [3.0.0]
 - Ported to 1.20.1
