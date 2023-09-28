@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
-import com.stereowalker.violentvillagers.ViolentVillagers;
+import com.stereowalker.violentvillagers.world.entity.ai.sensing.VSensorType;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +53,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
     public Brain.Provider<Villager> brainProvider() {
         return Brain.provider(MEMORY_TYPES, 
         		new ImmutableList.Builder<SensorType<? extends Sensor<? super Villager>>>()
-        		.add(ViolentVillagers.VILLAGER_ATTACKABLES)
+        		.add(VSensorType.VILLAGER_ATTACKABLES)
         		.addAll(Villager.SENSOR_TYPES).build());
     }
     

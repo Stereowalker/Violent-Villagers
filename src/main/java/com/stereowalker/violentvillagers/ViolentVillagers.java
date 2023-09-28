@@ -8,12 +8,13 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
 import com.stereowalker.unionlib.api.collectors.ConfigCollector;
 import com.stereowalker.unionlib.api.collectors.DefaultAttributeModifier;
+import com.stereowalker.unionlib.api.registries.RegistryCollector;
 import com.stereowalker.unionlib.config.ConfigBuilder;
 import com.stereowalker.unionlib.mod.MinecraftMod;
 import com.stereowalker.unionlib.mod.ServerSegment;
 import com.stereowalker.violentvillagers.config.Config;
 import com.stereowalker.violentvillagers.tags.BlockVTags;
-import com.stereowalker.violentvillagers.world.entity.ai.sensing.VillagerAttackablesSensor;
+import com.stereowalker.violentvillagers.world.entity.ai.sensing.VSensorType;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +26,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -40,8 +40,7 @@ public class ViolentVillagers extends MinecraftMod
 	public static final Config CONFIG = new Config();
     public static final ReputationEventType VILLAGER_KILLED = ReputationEventType.register("villager_killed");
 
-    public static final SensorType<VillagerAttackablesSensor> VILLAGER_ATTACKABLES = SensorType.register("villager_attackables", VillagerAttackablesSensor::new);
-
+    
 	public ViolentVillagers() 
 	{
 		super(MOD_ID, ()-> new ViolentVillagersClientSegment(), ()-> new ServerSegment());
@@ -51,6 +50,11 @@ public class ViolentVillagers extends MinecraftMod
 	@Override
 	public void onModConstruct() {
 		new BlockVTags();
+	}
+	
+	@Override
+	public void setupRegistries(RegistryCollector collector) {
+		collector.addRegistryHolder(VSensorType.class);
 	}
 	
 	@Override
