@@ -8,7 +8,7 @@
 	"ChestBlockMixin",
 	"VillagerMixin",
 	"BlockMixin",
-	"carrier.CarriableGenericMixin"
+	"carryon.PickupHandlerMixin"
   ],
   "client": [
   ],

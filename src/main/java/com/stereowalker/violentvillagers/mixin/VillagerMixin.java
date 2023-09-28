@@ -21,7 +21,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ReputationEventHandler;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.behavior.EraseMemoryIf;
 import net.minecraft.world.entity.ai.behavior.MeleeAttack;
@@ -61,11 +60,11 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
 	private static boolean continueAttacking(Villager vill) {
 		return false;
 	}
-
+	
 	private static void onStopAttacking(Villager vill, LivingEntity target) {
         Entity entity;
         DamageSource damageSource;
-        Level level = vill.level;
+        Level level = vill.level();
         if (target.isDeadOrDying() && (damageSource = target.getLastDamageSource()) != null && (entity = damageSource.getEntity()) != null && entity.getType() == EntityType.PLAYER) {
             Player player = (Player)entity;
             List<Player> list = level.getEntitiesOfClass(Player.class, vill.getBoundingBox().inflate(20.0));
@@ -82,6 +81,9 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
         return vill.getBrain().getMemory(MemoryModuleType.NEAREST_ATTACKABLE);
     }
 	
+    /**
+     * @param villagerBrain
+     */
     @Overwrite
     private void registerBrainGoals(Brain<Villager> villagerBrain) {
         VillagerProfession villagerProfession = this.getVillagerData().getProfession();
@@ -93,9 +95,15 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
             villagerBrain.addActivityWithConditions(Activity.WORK, VillagerGoalPackages.getWorkPackage(villagerProfession, 0.5f), ImmutableSet.of(Pair.of(MemoryModuleType.JOB_SITE, MemoryStatus.VALUE_PRESENT)));
         }
         villagerBrain.addActivity(Activity.CORE, VillagerGoalPackages.getCorePackage(villagerProfession, 0.5f));
+        //1.19.2
+        //villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(new StopAttackingIfTargetInvalid<Villager>(VillagerMixin::onStopAttacking), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(/*AxolotlAi::getSpeedModifierChasing*/1.0f), new MeleeAttack(20), new EraseMemoryIf<Villager>(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
+        //1.19.3+
         villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(StopAttackingIfTargetInvalid.create(VillagerMixin::onStopAttacking), SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(/*AxolotlAi::getSpeedModifierChasing*/1.0f), MeleeAttack.create(20), EraseMemoryIf.create(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
         villagerBrain.addActivityWithConditions(Activity.MEET, VillagerGoalPackages.getMeetPackage(villagerProfession, 0.5f), ImmutableSet.of(Pair.of(MemoryModuleType.MEETING_POINT, MemoryStatus.VALUE_PRESENT)));
         villagerBrain.addActivity(Activity.REST, VillagerGoalPackages.getRestPackage(villagerProfession, 0.5f));
+        //1.19.2
+        //ImmutableList<? extends Pair<Integer, ? extends Behavior<? super Villager>>> ent = new ImmutableList.Builder<Pair<Integer,? extends Behavior<? super Villager>>>().add(Pair.of(3, new StartAttacking<Villager>(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, 0.5f)).build();
+        //1.19.3+
         ImmutableList<? extends Pair<Integer, ? extends BehaviorControl<? super Villager>>> ent = new ImmutableList.Builder<Pair<Integer, ? extends BehaviorControl<? super Villager>>>().add(Pair.of(3, StartAttacking.create(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, 0.5f)).build();
         villagerBrain.addActivity(Activity.IDLE, ent);
         villagerBrain.addActivity(Activity.PANIC, VillagerGoalPackages.getPanicPackage(villagerProfession, 0.5f));
@@ -105,7 +113,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
         villagerBrain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         villagerBrain.setDefaultActivity(Activity.IDLE);
         villagerBrain.setActiveActivityIfPossible(Activity.IDLE);
-        villagerBrain.updateActivityFromSchedule(this.level.getDayTime(), this.level.getGameTime());
+        villagerBrain.updateActivityFromSchedule(this.level().getDayTime(), this.level().getGameTime());
     }
 
     private static void updateActivity(Villager vill) {
@@ -121,9 +129,9 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
 
     @Inject(method = "customServerAiStep", at = @At("TAIL"))
     protected void customServerAiStep2(CallbackInfo ci) {
-        this.level.getProfiler().push("villagerActivityUpdate");
+        this.level().getProfiler().push("villagerActivityUpdate");
         updateActivity((Villager)(Object)this);
-        this.level.getProfiler().pop();
+        this.level().getProfiler().pop();
     }
     
     @Shadow public int getPlayerReputation(Player player) {return 0;}

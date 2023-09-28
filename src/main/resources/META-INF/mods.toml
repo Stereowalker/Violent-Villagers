@@ -1,0 +1,43 @@
+
+modLoader="javafml"
+loaderVersion="[41,)"
+license="All Rights Reserved"
+issueTrackerURL="https://github.com/Stereowalker/Violent-Villagers/issues"
+logoFile="pack.png"
+[[mods]]
+modId="violentvillagers"
+version="${file.jarVersion}"
+displayName="Violent Villagers"
+updateJSONURL="https://stereowalker.com/update-files/violent-villagers.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/violent-villagers"
+credits="I'd like to thank all my supporters on Patreon for giving me a reason to continue modding, and you for downloading and playing with this mod"
+authors="Stereowalker"
+description='''
+Villagers can now attack you the player if offended
+'''
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.violentvillagers]] #optional
+    # the modid of the dependency
+    modId="forge" #mandatory
+    # Does this dependency have to exist - if not, ordering below must be specified
+    mandatory=true #mandatory
+    # The version range of the dependency
+    versionRange="[41,)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="NONE"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"
+# Here's another dependency
+[[dependencies.violentvillagers]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,1.21)"
+    ordering="NONE"
+    side="BOTH"
+	
+[[dependencies.violentvillagers]]
+    modId="unionlib"
+    mandatory=true
+    versionRange="[10.2.0, 10.3.0]"
+    ordering="NONE"
+    side="BOTH"

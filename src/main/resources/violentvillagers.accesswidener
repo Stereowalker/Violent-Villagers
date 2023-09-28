@@ -1,3 +1,0 @@
-accessWidener v1 named
-accessible field net/minecraft/world/entity/npc/Villager SENSOR_TYPES Lcom/google/common/collect/ImmutableList;
-accessible method net/minecraft/world/entity/ai/sensing/SensorType register (Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/minecraft/world/entity/ai/sensing/SensorType;
