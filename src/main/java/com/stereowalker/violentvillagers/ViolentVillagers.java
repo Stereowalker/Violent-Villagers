@@ -12,6 +12,7 @@ import com.stereowalker.unionlib.api.registries.RegistryCollector;
 import com.stereowalker.unionlib.config.ConfigBuilder;
 import com.stereowalker.unionlib.mod.MinecraftMod;
 import com.stereowalker.unionlib.mod.ServerSegment;
+import com.stereowalker.unionlib.util.VersionHelper;
 import com.stereowalker.violentvillagers.config.Config;
 import com.stereowalker.violentvillagers.tags.BlockVTags;
 import com.stereowalker.violentvillagers.world.entity.ai.sensing.VSensorType;
@@ -90,7 +91,7 @@ public class ViolentVillagers extends MinecraftMod
 	}
 	
     public static void upsetNearbyVillagers(Player player, BlockPos pos, boolean angerOnlyIfCanSee) {
-        List<Villager> list = player.level().getEntitiesOfClass(Villager.class, player.getBoundingBox().inflate(16.0));
+        List<Villager> list = VersionHelper.entityLevel(player).getEntitiesOfClass(Villager.class, player.getBoundingBox().inflate(16.0));
         list.stream().filter(villager -> !angerOnlyIfCanSee || BehaviorUtils.canSee(villager, player)).forEach(villager -> {
         	Brain<Villager> brain = villager.getBrain();
     		if (brain.getMemory(MemoryModuleType.HOME).isPresent() && brain.getMemory(MemoryModuleType.HOME).get().pos().closerThan(pos, ViolentVillagers.CONFIG.distance_from_site)) {

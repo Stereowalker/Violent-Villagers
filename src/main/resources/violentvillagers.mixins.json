@@ -8,6 +8,7 @@
 	"ChestBlockMixin",
 	"VillagerMixin",
 	"BlockMixin",
+	"NameTagItemMixin",
 	"carryon.PickupHandlerMixin"
   ],
   "client": [
