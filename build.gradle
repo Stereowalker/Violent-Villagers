@@ -148,7 +148,7 @@ curseforge {
 
 modrinth {
     token = "$System.env.MODRINTH_TOKEN"
-    projectId = "burden-of-time"
+    projectId = "violent-villagers"
     versionNumber = "${project.version}"
     versionType = "release"
     uploadFile = jar
