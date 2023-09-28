@@ -148,7 +148,7 @@ curseforge {
 
 modrinth {
     token = "$System.env.MODRINTH_TOKEN"
-    projectId = "violent-villagers"
+    projectId = "${project.modrinthId}"
     versionNumber = "${project.version}"
     versionType = "release"
     uploadFile = jar
@@ -159,15 +159,7 @@ modrinth {
         required.project "unionlib"
     }
 }
-// Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
-//def reobfFile = file("$buildDir/reobfJar/output.jar")
-//def reobfArtifact = artifacts.add('default', reobfFile) {
-//    type 'jar'
-//    builtBy 'reobfJar'
-//}
+/*
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -179,7 +171,7 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
-}
+}*/
 
 artifacts {
 	//archives sourcesJar
