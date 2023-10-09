@@ -23,12 +23,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ReputationEventHandler;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.BehaviorControl;
-import net.minecraft.world.entity.ai.behavior.EraseMemoryIf;
-import net.minecraft.world.entity.ai.behavior.MeleeAttack;
-import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
-import net.minecraft.world.entity.ai.behavior.StartAttacking;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -89,7 +83,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
     	//1.19.2
       //villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(new StopAttackingIfTargetInvalid<Villager>(VillagerMixin::onStopAttacking), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(/*AxolotlAi::getSpeedModifierChasing*/1.0f), new MeleeAttack(20), new EraseMemoryIf<Villager>(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
     	//1.19.3+
-    	villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(StopAttackingIfTargetInvalid.create(VillagerMixin::onStopAttacking), SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(/*AxolotlAi::getSpeedModifierChasing*/1.0f), MeleeAttack.create(20), EraseMemoryIf.create(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
+    	villagerBrain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 0, ImmutableList.of(VersionHelper.createStopAttackingIfTargetInvalid(VillagerMixin::onStopAttacking), VersionHelper.createSetWalkTargetFromAttackTargetIfTargetOutOfReach(/*AxolotlAi::getSpeedModifierChasing*/1.0f), VersionHelper.createMeleeAttack(20), VersionHelper.createEraseMemoryIf(VillagerMixin::continueAttacking, MemoryModuleType.ATTACK_TARGET)), MemoryModuleType.ATTACK_TARGET);
           
     }
     
@@ -101,7 +95,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
     	//1.19.2
       //return new ImmutableList.Builder<Pair<Integer,? extends Behavior<? super Villager>>>().add(Pair.of(3, new StartAttacking<Villager>(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, speedModifier)).build();
     	//1.19.3+
-    	return new ImmutableList.Builder<Pair<Integer,? extends BehaviorControl<? super Villager>>>().add(Pair.of(3, StartAttacking.create(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, speedModifier)).build();
+    	return new ImmutableList.Builder<Pair<Integer,?>>().add(Pair.of(3, VersionHelper.createStartAttacking(VillagerMixin::findNearestValidAttackTarget))).addAll(VillagerGoalPackages.getIdlePackage(villagerProfession, speedModifier)).build();
           
     }
 	
