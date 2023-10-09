@@ -136,9 +136,14 @@ curseforge {
 		addGameVersion(modMinecraftVersion)
 		addGameVersion("1.20")
 		addGameVersion("1.19.4")
+		addGameVersion("1.19.3")
+		addGameVersion("1.19.2")
+		addGameVersion("1.19.1")
+		addGameVersion("1.19")
         addGameVersion("${project.modLoader}")
         relations {
       		requiredDependency 'unionlib'
+        	optionalDependency 'carry-on'
 		}
 		mainArtifact(jar) {
 			displayName = "${modFilename}-${project.version}"
@@ -152,7 +157,7 @@ modrinth {
     versionNumber = "${project.version}"
     versionType = "release"
     uploadFile = jar
-    gameVersions = [modMinecraftVersion, "1.20", "1.19.4"]
+    gameVersions = [modMinecraftVersion, "1.20", "1.19.4", "1.19.3", "1.19.2", "1.19.1", "1.19"]
     loaders = ["${project.modLoader}".toLowerCase()]
 	changelog = file('changelog.md').text
     dependencies {

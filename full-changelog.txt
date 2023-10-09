@@ -1,3 +1,8 @@
+[3.0.2]
+- Updated UnionLib to 10.2.2
+- Temporarily disabled Carrier compatibility
+- Enabled proper support for 1.19.3, 1.19.2, 1.19.1 and 1.19
+
 [3.0.1]
 - Renaming a villager now requires a bit of reputation to perform (configurable)
 - Ported to Forge
