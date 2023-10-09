@@ -24,16 +24,14 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class CarriableGenericMixin {
 
 	//1.19.2
-	/*@Inject(method = "tryPickup", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
-	public void tryPickup_inject(@NotNull CarrierComponent carrier, @NotNull Level world, @NotNull BlockPos blockPos, @Nullable Entity entity, CallbackInfoReturnable<InteractionResult> cir) {
+	@Inject(method = "tryPickup", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
+	/*public void tryPickup_inject(@NotNull CarrierComponent carrier, @NotNull Level world, @NotNull BlockPos blockPos, @Nullable Entity entity, CallbackInfoReturnable<InteractionResult> cir) {
 		BlockState blockState = world.getBlockState(blockPos);
 		if (blockState.is(BlockVTags.GUARDED_BY_VILLAGERS) && carrier != null) {
 			ViolentVillagers.upsetNearbyVillagers(carrier.getOwner(), blockPos, false);
         }
 	}*/
-	
 	//1.19.3+
-	@Inject(method = "tryPickup", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
 	public void tryPickup_inject(@NotNull Player player, @NotNull Level world, @NotNull BlockPos blockPos, @Nullable Entity entity, CallbackInfoReturnable<InteractionResult> cir) {
 		BlockState blockState = world.getBlockState(blockPos);
 		if (blockState.is(BlockVTags.GUARDED_BY_VILLAGERS) && player != null) {

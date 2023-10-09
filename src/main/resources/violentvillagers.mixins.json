@@ -9,7 +9,6 @@
 	"VillagerMixin",
 	"BlockMixin",
 	"NameTagItemMixin",
-	"carrier.CarriableGenericMixin",
 	"carryon.PickupHandlerMixin"
   ],
   "client": [
